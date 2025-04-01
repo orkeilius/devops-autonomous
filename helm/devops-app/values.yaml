@@ -1,0 +1,31 @@
+# Default values for devops-app
+replicaCount: 1
+
+image:
+  repository: orkeilius/devops-autonomous
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations: {}  # Suppression de l'annotation redondante
+  hosts:
+    - host: devops-app.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+# Configuration des ressources pour les conteneurs
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
