@@ -22,10 +22,7 @@ jobs:
       - name: Configure Kubernetes
         uses: azure/k8s-set-context@v3
         with:
-          method: kubeconfig
-          cluster-name: ${{ secrets.KUBE_CLUSTER_NAME }}
-          cluster-server: ${{ secrets.KUBE_SERVER }}
-          token: ${{ secrets.KUBE_TOKEN }}
+          kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
       - name: Deploy Helm Chart
         run: |
