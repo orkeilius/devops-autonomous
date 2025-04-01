@@ -24,8 +24,12 @@ jobs:
         with:
           kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
+      - name: Build Helm Chart
+        run: |
+          helm package ./helm/devops-app -d ./helm/output
+
       - name: Deploy Helm Chart
         run: |
-          helm upgrade --install devops-app ./helm/devops-app \
-            --set image.repository=${{ secrets.DOCKER_HUB_USERNAME }}/devops-autonomous \
-            --set image.tag=latest
+          helm upgrade --install devops-app ./helm/output/devops-app-*.tgz \
+          --set image.repository=${{ secrets.DOCKER_HUB_USERNAME }}/devops-autonomous \
+          --set image.tag=latest
